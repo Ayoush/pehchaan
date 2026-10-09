@@ -1,0 +1,376 @@
+meta:
+  repo: Ayoush/pehchaan
+  stack: TypeScript, Node 22, Vitest
+  unit_of_work: One identifier rule + valid/invalid fixtures + test
+
+units_of_work:
+  - kind: rule
+    path: spec/rules/
+    registry: registry/rules.json
+    implemented: [gstin, pan, ifsc, upi, pincode]
+    missing_examples: [tan, aadhaar-format, passport, driving-licence, epf-uan]
+
+tasks:
+  # ── BEGINNER TRACK ──────────────────────────────────────────
+
+  - id: docs-gstin
+    title: "Document GSTIN layout in docs/gstin.md"
+    track: beginner
+    tier: docs
+    status: open
+    first_file: docs/gstin.md
+    skill: technical writing
+    acceptance:
+      - 15 characters named and explained
+      - Checksum algorithm called out
+      - 'format only' banner present
+      - One synthetic example GSTIN
+
+  - id: docs-privacy
+    title: "Document why Aadhaar fixtures are synthetic in docs/privacy.md"
+    track: beginner
+    tier: docs
+    status: open
+    first_file: docs/privacy.md
+    skill: technical writing
+    acceptance:
+      - No real numbers policy stated
+      - Generator named
+      - Rejection policy explained
+
+  - id: docs-errors
+    title: "Document the error-code list in docs/errors.md"
+    track: beginner
+    tier: docs
+    status: open
+    first_file: src/errors.ts
+    skill: API documentation
+    acceptance:
+      - Every stable error code listed
+      - One example per code
+      - No thrown strings — only error codes
+
+  - id: docs-readme-kyc-banner
+    title: "Add 'do not use for KYC' banner to README.md"
+    track: beginner
+    tier: docs
+    status: open
+    first_file: README.md
+    skill: technical writing
+    acceptance:
+      - Banner is above the fold
+      - Also present in CONTRIBUTING.md
+
+  - id: docs-contributing-rule
+    title: "Describe how to add a rule in CONTRIBUTING.md"
+    track: beginner
+    tier: docs
+    status: open
+    first_file: CONTRIBUTING.md
+    skill: technical writing
+    acceptance:
+      - Names the registry file
+      - Names two required fixtures (valid + invalid)
+      - Names the test command
+
+  - id: test-gstin-checksum
+    title: "GSTIN mod-36 happy path in src/gstin.test.ts"
+    track: beginner
+    tier: tests
+    status: open
+    first_file: src/gstin.test.ts
+    skill: checksum testing
+    acceptance:
+      - Known synthetic GSTIN passes
+      - Flipped check digit fails
+      - Error code is CHECKSUM
+
+  - id: test-pan-entity-type
+    title: "PAN entity-type map in src/pan.test.ts"
+    track: beginner
+    tier: tests
+    status: open
+    first_file: src/pan.test.ts
+    skill: table-driven tests
+    acceptance:
+      - P maps to 'person'
+      - C maps to 'company'
+      - Unknown letter fails closed
+
+  - id: test-upi-local-part
+    title: "UPI VPA local-part length in src/upi.test.ts"
+    track: beginner
+    tier: tests
+    status: open
+    first_file: src/upi.test.ts
+    skill: regex testing
+    acceptance:
+      - Empty local part fails
+      - Missing @ fails
+      - Handle is lowercased if spec says so
+
+  - id: test-ifsc-shape
+    title: "IFSC shape in src/ifsc.test.ts"
+    track: beginner
+    tier: tests
+    status: open
+    first_file: src/ifsc.test.ts
+    skill: format validation testing
+    acceptance:
+      - 11 chars required
+      - Fifth char must be 0
+      - Lowercase rejected
+
+  - id: test-pincode-first-digit
+    title: "Pincode first-digit rule in src/pincode.test.ts"
+    track: beginner
+    tier: tests
+    status: open
+    first_file: src/pincode.test.ts
+    skill: format validation testing
+    acceptance:
+      - First digit 0 rejected
+      - 6 digits required
+      - Non-digits rejected
+
+  - id: feat-vehicle-rule
+    title: "Vehicle registration rule in spec/rules/vehicle.json"
+    track: beginner
+    tier: tiny-feature
+    status: open
+    first_file: spec/rules/vehicle.json
+    skill: regex, domain knowledge
+    acceptance:
+      - BH series covered
+      - Old LL-00-LL-0000 format covered
+      - registry/rules.json status is done
+
+  - id: feat-state-code-table
+    title: "GSTIN state-code table through 38 in src/state-codes.ts"
+    track: beginner
+    tier: tiny-feature
+    status: open
+    first_file: src/state-codes.ts
+    skill: lookup tables
+    acceptance:
+      - 07 is Delhi
+      - Unknown code fails
+      - Table is the only source of truth
+
+  - id: feat-bank-prefix
+    title: "Bank-prefix display name for SBIN in spec/rules/ifsc-prefixes.json"
+    track: beginner
+    tier: tiny-feature
+    status: open
+    first_file: spec/rules/ifsc-prefixes.json
+    skill: data modeling
+    acceptance:
+      - SBIN prefix maps to display name
+      - Unknown prefix is still format-valid
+      - No live lookup
+
+  - id: feat-synthetic-gstin-generator
+    title: "Synthetic GSTIN generator in src/fixtures.ts"
+    track: beginner
+    tier: tiny-feature
+    status: open
+    first_file: src/fixtures.ts
+    skill: checksum algorithm, TypeScript
+    acceptance:
+      - Generated GSTIN passes checksum
+      - Tests use the generator
+      - README says 'synthetic'
+
+  - id: feat-tan-rule
+    title: "TAN format rule in spec/rules/tan.json"
+    track: beginner
+    tier: tiny-feature
+    status: open
+    first_file: spec/rules/tan.json
+    skill: format validation
+    acceptance:
+      - 10 chars
+      - Fourth char is a letter
+      - Test added
+
+  - id: bug-lowercase-gstin
+    title: "Fix lowercase GSTIN accepted-then-rechecked wrong in src/gstin.ts"
+    track: beginner
+    tier: small-bug
+    status: open
+    first_file: src/gstin.ts
+    skill: normalization, string handling
+    acceptance:
+      - Normalize to uppercase first
+      - Checksum on normalized form
+      - Original string preserved on result
+
+  - id: bug-pan-space
+    title: "Fix PAN regex allowing space in src/pan.ts"
+    track: beginner
+    tier: small-bug
+    status: open
+    first_file: src/pan.ts
+    skill: regex
+    acceptance:
+      - Space in PAN fails
+      - Tab in PAN fails
+      - Error code is SHAPE
+
+  - id: bug-upi-trailing-dot
+    title: "Fix UPI handle with trailing dot accepted in src/upi.ts"
+    track: beginner
+    tier: small-bug
+    status: open
+    first_file: src/upi.ts
+    skill: edge case testing
+    acceptance:
+      - Trailing dot fails
+      - Leading dot fails
+      - Fixture added
+
+  - id: bug-state-code-99
+    title: "Fix state code 99 treated as valid in src/state-codes.ts"
+    track: beginner
+    tier: small-bug
+    status: open
+    first_file: src/state-codes.ts
+    skill: data validation
+    acceptance:
+      - 99 is rejected
+      - Test names the code
+      - Docs updated
+
+  - id: bug-error-code-typo
+    title: "Fix error code typo CHKSUM vs CHECKSUM in src/errors.ts"
+    track: beginner
+    tier: small-bug
+    status: open
+    first_file: src/errors.ts
+    skill: refactoring
+    acceptance:
+      - One public code CHECKSUM
+      - Both call sites updated
+      - Changelog entry added
+
+  # ── ADVANCED TRACK ───────────────────────────────────────────
+
+  - id: adv-verhoeff-algorithm
+    title: "Implement Verhoeff checksum for Aadhaar format (synthetic only)"
+    track: advanced
+    tier: advanced
+    status: open
+    first_file: src/
+    skill: checksum algorithms, TypeScript
+    acceptance:
+      - Correct Verhoeff tables
+      - Only synthetic 12-digit numbers in fixtures
+      - No real Aadhaar numbers ever
+
+  - id: adv-property-tests
+    title: "Add property-style tests for GSTIN and PAN validators"
+    track: advanced
+    tier: advanced
+    status: open
+    first_file: src/gstin.test.ts
+    skill: property-based testing, fast-check
+    acceptance:
+      - Uses fast-check or similar
+      - Generated valid inputs all pass
+      - Mutated check digit always fails
+
+  - id: adv-json-schema
+    title: "Add JSON Schema for spec/rules/ fixtures"
+    track: advanced
+    tier: advanced
+    status: open
+    first_file: spec/rules/
+    skill: JSON Schema, CI tooling
+    acceptance:
+      - Schema in spec/rule.schema.json
+      - CI validates all rule files
+      - Invalid rule fails CI with named field
+
+  - id: adv-cli
+    title: "Build a pehchaan validate CLI"
+    track: advanced
+    tier: advanced
+    status: open
+    first_file: src/
+    skill: CLI design, TypeScript
+    acceptance:
+      - pehchaan validate --type gstin <value>
+      - Exit 0 = valid, 1 = invalid, 2 = usage error
+      - --json flag outputs structured result
+
+  - id: adv-docs-site
+    title: "Generate a static docs site from spec/rules/"
+    track: advanced
+    tier: advanced
+    status: open
+    first_file: spec/rules/
+    skill: static site generation, tooling
+    acceptance:
+      - One page per rule
+      - Valid/invalid examples shown
+      - Deployed to GitHub Pages
+
+  - id: adv-normalize-gstin
+    title: "Add a normalize() function that uppercases and trims before validation"
+    track: advanced
+    tier: advanced
+    status: open
+    first_file: src/gstin.ts
+    skill: API design, TypeScript
+    acceptance:
+      - normalize() is exported
+      - validate() calls it internally
+      - Original input preserved in error messages
+
+  - id: adv-ifsc-bank-table
+    title: "Build a complete IFSC bank-prefix table from public RBI data"
+    track: advanced
+    tier: advanced
+    status: open
+    first_file: spec/rules/ifsc-prefixes.json
+    skill: data pipeline, JSON
+    acceptance:
+      - Top 50 banks covered
+      - Table is data file, not code
+      - Unknown prefix returns null
+
+  - id: adv-upi-handle-rules
+    title: "Document and test all UPI VPA format rules from NPCI spec"
+    track: advanced
+    tier: advanced
+    status: open
+    first_file: spec/rules/upi.json
+    skill: spec reading, testing
+    acceptance:
+      - Max 256 chars
+      - Allowed special chars listed
+      - 5 edge-case tests added
+
+  - id: adv-error-i18n
+    title: "Add Hindi error messages alongside English codes"
+    track: advanced
+    tier: advanced
+    status: open
+    first_file: src/errors.ts
+    skill: i18n, TypeScript
+    acceptance:
+      - Each error code has hi-IN message
+      - Locale parameter optional (default en-IN)
+      - Tests cover both locales
+
+  - id: adv-benchmark
+    title: "Benchmark GSTIN validation throughput on 100k synthetic inputs"
+    track: advanced
+    tier: advanced
+    status: open
+    first_file: src/gstin.ts
+    skill: performance testing, Node.js
+    acceptance:
+      - Benchmark in scripts/bench.ts
+      - Results in docs/performance.md
+      - No regression introduced
