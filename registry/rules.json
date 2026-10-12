@@ -1,0 +1,50 @@
+{
+  "schema": "1",
+  "validators": [
+    {
+      "id": "gstin",
+      "spec": "spec/rules/gstin.json",
+      "source": "src/gstin.ts",
+      "tests": "tests/gstin.test.ts",
+      "status": "done",
+      "coverage": ["shape", "checksum", "unknown_state", "format"],
+      "missing": []
+    },
+    {
+      "id": "pan",
+      "spec": "spec/rules/pan.json",
+      "source": "src/pan.ts",
+      "tests": "tests/pan.test.ts",
+      "status": "done",
+      "coverage": ["shape", "format", "entity_type"],
+      "missing": []
+    },
+    {
+      "id": "ifsc",
+      "spec": null,
+      "source": "src/ifsc.ts",
+      "tests": "tests/ifsc.test.ts",
+      "status": "done",
+      "coverage": ["shape", "format"],
+      "missing": ["spec/rules/ifsc.json"]
+    },
+    {
+      "id": "upi",
+      "spec": null,
+      "source": "src/upi.ts",
+      "tests": "tests/upi.test.ts",
+      "status": "done",
+      "coverage": ["format", "shape"],
+      "missing": ["spec/rules/upi.json"]
+    },
+    {
+      "id": "pincode",
+      "spec": null,
+      "source": "src/pincode.ts",
+      "tests": "tests/pincode.test.ts",
+      "status": "done",
+      "coverage": ["shape", "format"],
+      "missing": ["spec/rules/pincode.json"]
+    }
+  ]
+}

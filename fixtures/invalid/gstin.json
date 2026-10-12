@@ -1,0 +1,22 @@
+[
+  {
+    "input": "27ABCDE1234F1Z",
+    "error": "SHAPE",
+    "note": "Only 14 characters"
+  },
+  {
+    "input": "00ABCDE1234F1ZA",
+    "error": "UNKNOWN_STATE",
+    "note": "State code 00 does not exist"
+  },
+  {
+    "input": "27ABCDE1234F1XA",
+    "error": "FORMAT",
+    "note": "14th character is X instead of Z"
+  },
+  {
+    "input": "2700000000001ZA",
+    "error": "FORMAT",
+    "note": "PAN segment is all zeros — invalid pattern"
+  }
+]

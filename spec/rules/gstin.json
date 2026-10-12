@@ -1,0 +1,36 @@
+{
+  "validator": "gstin",
+  "version": "1",
+  "rules": [
+    {
+      "id": "gstin-length",
+      "description": "Must be exactly 15 characters",
+      "error_code": "SHAPE"
+    },
+    {
+      "id": "gstin-state-code",
+      "description": "First 2 digits must be a valid GST state code",
+      "error_code": "UNKNOWN_STATE"
+    },
+    {
+      "id": "gstin-pan-segment",
+      "description": "Characters 3-12 must follow PAN pattern AAAAA9999A",
+      "error_code": "FORMAT"
+    },
+    {
+      "id": "gstin-entity-number",
+      "description": "Character 13 must be 1-9 or A-Z",
+      "error_code": "FORMAT"
+    },
+    {
+      "id": "gstin-z-char",
+      "description": "Character 14 must always be Z",
+      "error_code": "FORMAT"
+    },
+    {
+      "id": "gstin-checksum",
+      "description": "Character 15 is mod-36 checksum over first 14 characters",
+      "error_code": "CHECKSUM"
+    }
+  ]
+}

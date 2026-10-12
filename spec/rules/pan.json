@@ -1,0 +1,22 @@
+{
+  "validator": "pan",
+  "version": "1",
+  "rules": [
+    {
+      "id": "pan-length",
+      "description": "Must be exactly 10 characters",
+      "error_code": "SHAPE"
+    },
+    {
+      "id": "pan-pattern",
+      "description": "Must match AAAAA9999A (5 alpha, 4 digit, 1 alpha)",
+      "error_code": "FORMAT"
+    },
+    {
+      "id": "pan-entity-code",
+      "description": "4th character must be a known entity type code",
+      "error_code": "ENTITY_TYPE",
+      "known_codes": ["P", "C", "H", "F", "A", "T", "B", "L", "J", "G"]
+    }
+  ]
+}
