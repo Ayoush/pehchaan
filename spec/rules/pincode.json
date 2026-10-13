@@ -1,0 +1,21 @@
+{
+    "validator": "pincode",
+    "version": "1",
+    "rules": [
+        {
+            "id": "pincode-length",
+            "description": "Length of the pincode must be exactly 6 digits.",
+            "error_code": "SHAPE"
+        },
+        {
+            "id": "pincode-digits",
+            "description": "Pincode must contain only digits.",
+            "error_code": "FORMAT"
+        },
+        {
+            "id": "pincode-leading-zero",
+            "description": "Pincode must not start with zero.",
+            "error_code": "FORMAT"
+        }
+    ]
+}

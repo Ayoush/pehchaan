@@ -30,21 +30,21 @@
     },
     {
       "id": "upi",
-      "spec": null,
+      "spec": "spec/rules/upi.json",
       "source": "src/upi.ts",
       "tests": "tests/upi.test.ts",
       "status": "done",
       "coverage": ["format", "shape"],
-      "missing": ["spec/rules/upi.json"]
+      "missing": []
     },
     {
       "id": "pincode",
-      "spec": null,
+      "spec": "spec/rules/pincode.json",
       "source": "src/pincode.ts",
       "tests": "tests/pincode.test.ts",
       "status": "done",
       "coverage": ["shape", "format"],
-      "missing": ["spec/rules/pincode.json"]
+      "missing": []
     }
   ]
 }

@@ -1,0 +1,36 @@
+{
+    "validator": "upi",
+    "version": "1",
+    "rules": [
+        {
+            "id": "upi-at-sign",
+            "description": "UPI VPA must contain @",
+            "error_code": "FORMAT"
+        }, {
+            "id": "upi-single-at-sign",
+            "description": "UPI VPA must contain exactly one @",
+            "error_code": "FORMAT"
+        },
+        {
+            "id": "upi-handle-not-empty",
+            "description": "UPI VPA handle (before @) must not be empty",
+            "error_code": "SHAPE"
+        }, {
+            "id": "upi-psp-not-empty",
+            "description": "UPI VPA PSP (after @) must not be empty",
+            "error_code": "SHAPE"
+        }, {
+            "id": "upi-handle-dot-boundaries",
+            "description": "UPI VPA handle must not start or end with a dot",
+            "error_code": "FORMAT"
+        }, {
+            "id": "upi-handle-characters",
+            "description": "UPI VPA handle contains invalid characters",
+            "error_code": "FORMAT"
+        }, {
+            "id":"upi-psp-identifier",
+            "description": "UPI VPA PSP is not a valid identifier",
+            "error_code": "FORMAT" 
+        }
+    ]
+}
