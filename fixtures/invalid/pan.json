@@ -1,0 +1,17 @@
+[
+  {
+    "input": "ZZZPZ001Z",
+    "error": "SHAPE",
+    "note": "Only 9 characters"
+  },
+  {
+    "input": "12345ABCDE",
+    "error": "FORMAT",
+    "note": "Does not match the AAAAA9999A pattern"
+  },
+  {
+    "input": "ZZZXZ0001Z",
+    "error": "ENTITY_TYPE",
+    "note": "Unknown entity code X"
+  }
+]

@@ -1,0 +1,27 @@
+[
+  {
+    "input": "ZZZPZ0001Z",
+    "entityCode": "P",
+    "entityType": "Individual"
+  },
+  {
+    "input": "ZZZCZ0002Z",
+    "entityCode": "C",
+    "entityType": "Company"
+  },
+  {
+    "input": "ZZZHZ0003Z",
+    "entityCode": "H",
+    "entityType": "Hindu Undivided Family"
+  },
+  {
+    "input": "ZZZFZ0004Z",
+    "entityCode": "F",
+    "entityType": "Firm / LLP"
+  },
+  {
+    "input": "ZZZGZ0005Z",
+    "entityCode": "G",
+    "entityType": "Government"
+  }
+]
