@@ -77,3 +77,5 @@ docs/
 New here? Start with a [`good first issue`](../../issues?q=label%3A%22good+first+issue%22). See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 Every PR is reviewed first by our AI reviewer (Gremlin) then by a human mentor.
+
+For instructions on adding a new validator, see [Adding a New Validator](docs/adding-validators.md).
