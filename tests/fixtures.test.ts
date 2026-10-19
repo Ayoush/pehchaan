@@ -1,3 +1,5 @@
+import { readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
 import { describe, it, expect } from 'vitest';
 import { syntheticGstin, SYNTHETIC_GSTINS } from '../src/fixtures.js';
 import { validateGstin } from '../src/gstin.js';
@@ -31,4 +33,39 @@ describe('SYNTHETIC_GSTINS', () => {
       expect(result.ok, `${name}: ${gstin}`).toBe(true);
     }
   });
+});
+type ValidGstinFixture = {
+  input: string;
+};
+
+type InvalidGstinFixture = {
+  input: string;
+  error: string;
+};
+
+const validGstinFixtures = JSON.parse(
+  readFileSync(resolve(process.cwd(), 'fixtures/valid/gstin.json'), 'utf8'),
+) as ValidGstinFixture[];
+
+const invalidGstinFixtures = JSON.parse(
+  readFileSync(resolve(process.cwd(), 'fixtures/invalid/gstin.json'), 'utf8'),
+) as InvalidGstinFixture[];
+
+describe('GSTIN validation fixtures', () => {
+  it.each(validGstinFixtures)('accepts valid GSTIN input $input', ({ input }) => {
+    expect(validateGstin(input).ok).toBe(true);
+  });
+
+  it.each(invalidGstinFixtures)(
+    'rejects invalid GSTIN input $input with error $error',
+    ({ input, error }) => {
+      const result = validateGstin(input);
+
+      expect(result.ok).toBe(false);
+
+      if (!result.ok) {
+        expect(result.error.code).toBe(error);
+      }
+    },
+  );
 });
