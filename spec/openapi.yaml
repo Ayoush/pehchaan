@@ -1,0 +1,248 @@
+openapi: 3.1.0
+info:
+  title: pehchaan validators
+  version: 0.1.0
+
+paths:
+  /validate/gstin:
+    post:
+      operationId: validateGstin
+      summary: Validate a GSTIN (input is uppercased first)
+      requestBody:
+        $ref: '#/components/requestBodies/ValidateBody'
+      responses:
+        '200':
+          description: Validation result (valid or invalid)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GstinResult'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+
+  /validate/pan:
+    post:
+      operationId: validatePan
+      summary: Validate a PAN (input is uppercased first)
+      requestBody:
+        $ref: '#/components/requestBodies/ValidateBody'
+      responses:
+        '200':
+          description: Validation result (valid or invalid)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PanResult'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+
+  /validate/ifsc:
+    post:
+      operationId: validateIfsc
+      summary: Validate an IFSC (lowercase is rejected, not converted)
+      requestBody:
+        $ref: '#/components/requestBodies/ValidateBody'
+      responses:
+        '200':
+          description: Validation result (valid or invalid)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IfscResult'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+
+  /validate/upi:
+    post:
+      operationId: validateUpi
+      summary: Validate a UPI VPA (input is lowercased first)
+      requestBody:
+        $ref: '#/components/requestBodies/ValidateBody'
+      responses:
+        '200':
+          description: Validation result (valid or invalid)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpiResult'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+
+  /validate/pincode:
+    post:
+      operationId: validatePincode
+      summary: Validate a pincode (exactly 6 digits, no leading zero)
+      requestBody:
+        $ref: '#/components/requestBodies/ValidateBody'
+      responses:
+        '200':
+          description: Validation result (valid or invalid)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PincodeResult'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+
+components:
+  requestBodies:
+    ValidateBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ValidateRequest'
+
+  responses:
+    BadRequest:
+      description: Request was malformed (for example, no value sent)
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RequestError'
+
+  schemas:
+    ValidateRequest:
+      type: object
+      required: [value]
+      properties:
+        value:
+          type: string
+
+    RequestError:
+      type: object
+      required: [message]
+      properties:
+        message:
+          type: string
+
+    ErrorCode:
+      type: string
+      enum: [SHAPE, CHECKSUM, UNKNOWN_STATE, ENTITY_TYPE, FORMAT]
+
+    ValidationError:
+      type: object
+      required: [code, message]
+      properties:
+        code:
+          $ref: '#/components/schemas/ErrorCode'
+        message:
+          type: string
+
+    GstinValue:
+      type: object
+      required: [raw, stateCode, pan, entityNumber, entityCode, checksum]
+      properties:
+        raw: { type: string }
+        stateCode: { type: string }
+        pan: { type: string }
+        entityNumber: { type: string }
+        entityCode: { type: string }
+        checksum: { type: string }
+
+    PanValue:
+      type: object
+      required: [raw, entityCode, entityType]
+      properties:
+        raw: { type: string }
+        entityCode: { type: string }
+        entityType: { type: string }
+
+    IfscValue:
+      type: object
+      required: [raw, bankCode, branchCode]
+      properties:
+        raw: { type: string }
+        bankCode: { type: string }
+        branchCode: { type: string }
+
+    UpiValue:
+      type: object
+      required: [raw, handle, psp]
+      properties:
+        raw: { type: string }
+        handle: { type: string }
+        psp: { type: string }
+
+    PincodeValue:
+      type: object
+      required: [raw, zone, subzone]
+      properties:
+        raw: { type: string }
+        zone: { type: string }
+        subzone: { type: string }
+
+    GstinResult:
+      oneOf:
+        - type: object
+          required: [ok, value]
+          properties:
+            ok: { type: boolean, const: true }
+            value:
+              $ref: '#/components/schemas/GstinValue'
+        - type: object
+          required: [ok, error]
+          properties:
+            ok: { type: boolean, const: false }
+            error:
+              $ref: '#/components/schemas/ValidationError'
+
+    PanResult:
+      oneOf:
+        - type: object
+          required: [ok, value]
+          properties:
+            ok: { type: boolean, const: true }
+            value:
+              $ref: '#/components/schemas/PanValue'
+        - type: object
+          required: [ok, error]
+          properties:
+            ok: { type: boolean, const: false }
+            error:
+              $ref: '#/components/schemas/ValidationError'
+
+    IfscResult:
+      oneOf:
+        - type: object
+          required: [ok, value]
+          properties:
+            ok: { type: boolean, const: true }
+            value:
+              $ref: '#/components/schemas/IfscValue'
+        - type: object
+          required: [ok, error]
+          properties:
+            ok: { type: boolean, const: false }
+            error:
+              $ref: '#/components/schemas/ValidationError'
+
+    UpiResult:
+      oneOf:
+        - type: object
+          required: [ok, value]
+          properties:
+            ok: { type: boolean, const: true }
+            value:
+              $ref: '#/components/schemas/UpiValue'
+        - type: object
+          required: [ok, error]
+          properties:
+            ok: { type: boolean, const: false }
+            error:
+              $ref: '#/components/schemas/ValidationError'
+
+    PincodeResult:
+      oneOf:
+        - type: object
+          required: [ok, value]
+          properties:
+            ok: { type: boolean, const: true }
+            value:
+              $ref: '#/components/schemas/PincodeValue'
+        - type: object
+          required: [ok, error]
+          properties:
+            ok: { type: boolean, const: false }
+            error:
+              $ref: '#/components/schemas/ValidationError'
