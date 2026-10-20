@@ -21,12 +21,12 @@
     },
     {
       "id": "ifsc",
-      "spec": null,
+      "spec": "spec/rules/ifsc.json",
       "source": "src/ifsc.ts",
       "tests": "tests/ifsc.test.ts",
       "status": "done",
       "coverage": ["shape", "format"],
-      "missing": ["spec/rules/ifsc.json"]
+      "missing": []
     },
     {
       "id": "upi",

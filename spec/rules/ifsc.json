@@ -1,0 +1,26 @@
+{
+  "validator": "ifsc",
+  "version": "1",
+  "rules": [
+    {
+      "id": "ifsc-length",
+      "description": "Must be exactly 11 characters",
+      "error_code": "SHAPE"
+    },
+    {
+      "id": "ifsc-5th-char",
+      "description": "5th character must always be 0",
+      "error_code": "FORMAT"
+    },
+    {
+      "id": "ifsc-bank-code",
+      "description": "First 4 characters must be uppercase alphabets",
+      "error_code": "FORMAT"
+    },
+    {
+      "id": "ifsc-branch-code",
+      "description": "Last 6 characters must be uppercase alphanumeric",
+      "error_code": "FORMAT"
+    }
+  ]
+}
